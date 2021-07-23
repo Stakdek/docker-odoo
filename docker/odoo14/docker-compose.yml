@@ -3,7 +3,7 @@ services:
   # Information needed set up an odoo web
   # application container.
   web:
-    image: odoo:14.0
+    image: odoo:14
     container_name: odoo_14
     depends_on:
     - db
