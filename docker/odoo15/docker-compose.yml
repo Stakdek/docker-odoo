@@ -1,0 +1,33 @@
+version: '3'
+services:
+
+  odoo:
+    image: odoo:15
+    restart: unless-stopped
+    environment:
+      - HOST=postgresql
+      - USER=odoo
+      - PASSWORD=odoo
+    ports:
+      - 8069:8069
+    volumes: 
+      - ./config:/etc/odoo
+      - ./data/odoo/addons/extra:/mnt/extra-addons
+      - ./data/odoo/addons/enterprise:/mnt/enterprise
+    links: 
+      - postgresql
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_DB=postgres
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
